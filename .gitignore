@@ -1,3 +1,4 @@
+#ignore les réglages de phpstorm
 /.idea/
 ###> symfony/framework-bundle ###
 /.env.local
