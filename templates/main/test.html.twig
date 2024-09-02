@@ -1,11 +1,37 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
+{% block body %}
 <h1>Testou</h1>
-</body>
-</html>
+<div>
+<div>{{ "now"|date('l jS \of F Y h:i:s A')}}</div>
+{# Crée une variable #}
+{%  set name = 'Stéphane' %}
+<h2>{{ name|upper }}</h2>
+
+{# crée un tableau de couleurs #}
+    {% set colors=['Orange','red','blue'] %}
+    {{ colors|join('/') }}
+    {% for color in colors %}
+        <div>{{ loop.last }}</div>
+        {# loop.index indique les index de la boucle, loop.last, test si cest le dernier index vrai à 1 faux à 0 #}
+        <div style="background-color: {{ color }}; padding: 10px; margin: 5px;">
+            {{ color }}
+        </div>
+    {% endfor %}
+
+    {# Création d'un objet #}
+    {% set book = {
+        title:'Mon livre',
+        year : 2000,
+        author:'John'} %}
+    <h3>{{ book.title }}</h3>
+    <div>
+        {% for key, val in book %}
+        <div>{{ key }} : {{ val }}</div>
+        {% endfor %}
+    </div>
+    <div> {% set nom ="Gros baba"|upper %}</div>
+    {{ nom }}
+</div>
+{%endblock %}
+
+{% block title %} {{ parent() }} | testtounet {% endblock %}
