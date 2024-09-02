@@ -15,6 +15,12 @@ class MainController extends AbstractController
     #[Route('/test',name:'main_test')]
     public function test()
     {
-    return $this->render('main/test.html.twig');
+        $series = [
+            "title"=>"Game Of Thrones",
+            "year"=>2012,
+        ];
+    return $this->render('main/test.html.twig',
+        ["myserises"=>$series,
+            "autreVar"=>412412]);
     }
 }
