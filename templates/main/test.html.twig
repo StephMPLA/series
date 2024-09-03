@@ -2,13 +2,13 @@
 {% block body %}
 <h1>Testou</h1>
 
-    <div>{{ myserises.title|upper }}{{ autreVar }}</div>
+    <div>{{ myserises.title }}{{ autreVar }}</div>
 
 <div>
 <div>{{ "now"|date('l jS \of F Y h:i:s A')}}</div>
 {# Crée une variable #}
 {%  set name = 'Stéphane' %}
-<h2>{{ name|upper }}</h2>
+<h2>{{ name }}</h2>
 
 {# crée un tableau de couleurs #}
     {% set colors=['Orange','red','blue'] %}
