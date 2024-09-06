@@ -1,46 +1,55 @@
-body{
-    background:linear-gradient(#000000,#132135);
+body {
+    background: linear-gradient(#000000, #132135);
     background-attachment: fixed;
     color: #EEE;
-    font-family: "Baskervville SC", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-.container{
-    max-width: 1000px;
-    margin : auto;
-    padding : 5px;
+    font-family: 'Crimson Text', serif;
 }
 
-a{
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 5px;
+}
+
+a {
     color: inherit;
     text-decoration: none;
 }
 
-a:hover{
-    color:#BC956B;
+a:hover {
+    color: #BC956B;
 }
 
-img{
+img {
     max-width: 100%;
 }
 
-body>.container{
+body > .container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-header img{
+header img {
     height: 70px;
 }
 
-main{
-    flex : 1;
+main {
+    flex: 1;
 }
 
-nav ul{
+nav ul {
     display: flex;
     list-style: none;
     padding-left: 0;
+}
+
+nav li {
+    margin-right: 1rem;
+}
+
+.series-list {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 }
