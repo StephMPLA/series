@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Nerko+One&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+   <!-- <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">-->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <link rel="icon" href="{{ asset('img/TechVirtual3D.svg') }}">
+
+    {% block extraStyles %} {%endblock %}
 </head>
 <body>
     <div class="container">
@@ -20,6 +22,15 @@
             <h1><a href="{{ path('main_home') }}"></a><img src="{{ asset('img/TechVirtual3D.svg') }}" alt="Series!"></h1>
             {% include('inc/nav.html.twig') %}
         </header>
+        <!--Ajout message si envoi de formulaire OK-->
+        {# read and display all flash messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <main>
             {% block body %}{% endblock %}
         </main>

@@ -5,12 +5,41 @@
 {% endblock %}
 
 {% block body %}
-<h2>todo : Le titre de la séries</h2>
-
     {# todo : affichier les info de la séries #}
+    <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
     <h2>{{ serie.name }}</h2>
-<div>{{ serie.overview }}</div>
-    <div>{{ serie.vote }}</div>
+    <div>User ratings:{{ serie.vote }}</div>
 
+    <div>Categorized in :{{ serie.genres }}</div>
+    <div>Serie status : {{ serie.status }}</div>
+    <div>Aired from {{ serie.firstAirDate|date("Y-m-d") }} to {{ serie.lastAirDate|date("Y-m-d") }}</div>
+    <div>{{ serie.overview|nl2br }}</div>
+
+    <section class="seasons">
+        <h3>Seasons</h3>
+        {% for season in serie.seasons %}
+        <article>
+            <img src="{{ asset('img/posters/seasons/'~season.poster) }}" alt="{{ serie.name }} season#{{ season.number }}">
+          <div>
+            <h4>{{ season.number }}</h4>
+            {% if season.overview %}
+            <div>{{ season.overview }}</div>
+            {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+
+{% endblock %}
+
+{% block extraStyles %}
+    <style>
+        body {
+            background-image: url('{{ asset('img/backdrops/' ~ serie.backdrop) }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
 {% endblock %}
 

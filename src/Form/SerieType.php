@@ -27,7 +27,7 @@ class SerieType extends AbstractType
                     'ended'=>'Ended',
                     'returning'=>'Returning',
                 ],
-                'mutliple'=>false,
+                'multiple'=>false,
                 ])
             ->add('vote')
             ->add('popularity')
@@ -36,15 +36,22 @@ class SerieType extends AbstractType
                 'html5' => true,
                 'widget' => 'single_text',
             ])
-            ->add('lastAirDate', null, [
-                'widget' => 'single_text',
+            ->add('lastAirDate', DateType::class, [
+                'widget' => 'choice',  // Utilisation de listes déroulantes
+                'format' => 'yyyy-dd-MM',  // Ordre : année, jour, mois
+                'years' => range(date('Y'), date('Y') - 100),  // Plage d'années personnalisée
+                'placeholder' => [
+                    'year' => 'Année',
+                    'day' => 'Jour',
+                    'month' => 'Mois'
+                ],
             ])
             ->add('backdrop')
             ->add('poster')
             ->add('tmdbId')
-            ->add('dateCreated', null, [
-                'widget' => 'single_text',
-            ])
+            //->add('dateCreated', null, [
+               //'widget' => 'single_text',
+            //])
             ->add('dateModified', null, [
                 'widget' => 'single_text',
             ])

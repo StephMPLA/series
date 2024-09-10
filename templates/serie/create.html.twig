@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme serieForm 'bootstrap_5_layout.html.twig' %}
+
 {% block body %}
    <div>
        {# affichier formulaire de creation #}
+      {{ form_start(serieForm) }}
+      {{ form_widget(serieForm) }}
+      <button>Envoyer</button>
+      {{ form_end(serieForm) }}
    </div>
 {% endblock %}
 

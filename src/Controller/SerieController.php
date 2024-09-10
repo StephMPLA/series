@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
+use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use function mysql_xdevapi\getSession;
 
 #[Route('/series', name: 'serie_')]
 class SerieController extends AbstractController
 {
-    #[Route('', name: 'list')]
+    #[Route('', name: 'list',methods: ['GET'])]
     public function list(SerieRepository $serieRepository): Response
     {
         //todo: aller chercher les series en bdd
@@ -33,22 +35,53 @@ class SerieController extends AbstractController
         ]);
     }
 
-    #[Route('/details/{id}', name: 'details')]
+    #[Route('/details/{id}', name: 'details',methods: ['GET'])]
     public function details(int $id, SerieRepository $serieRepository): Response
     {
         //todo: aller chercher les series en bdd
         $serie = $serieRepository->find($id);
 
+        //Si il n'y a pas de series
+        if(!$serie){
+            throw $this->createNotFoundException('Serie not found');
+        }
+
         return $this->render('serie/details.html.twig', [
     "serie" => $serie
         ]);
     }
-    #[Route('/create', name: 'create')]
-    public function create(Request $request): Response
+    //GET ET POST
+    #[Route('/create', name: 'create',methods: ['GET', 'POST'])]
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager,
+    ): Response
     {
-        dump($request);
-        return $this->render('serie/create.html.twig', [
+        //afficher formulaire
+        $serie = new Serie();
+        $serieForm = $this->createForm(SerieType::class, $serie);
 
+        //traiter le formulaire
+        $serieForm->handleRequest($request);
+
+        //Si on envoi le formulaire et si il est valid
+        if($serieForm->isSubmitted() && $serieForm->isValid()){
+            //Date de creation ne peut etre nul donc crée la date d'aujourdhui
+            $serie->setDateCreated(new \DateTime());
+        $entityManager->persist($serie);
+        $entityManager->flush();
+
+        //Ajout un message
+        $this->addFlash('success','Serie added successfully');
+        //details à besoin d'un id donc lui retourner la valeur
+            //Bonne pratique toujours faire une redirection sur le bouton envoyer, ca evite que
+            // l'utilisateur avec F5 renvoie toujours le meme formulaire plusieurs fois
+        return $this->redirectToRoute('serie_details', ['id' => $serie->getId()]);
+        //Aller dans base.html.twig pour afficher ce message
+        }
+
+        return $this->render('serie/create.html.twig', [
+        'serieForm' => $serieForm->createView()
         ]);
     }
     #[Route('/demo', name: 'em-demo')]
@@ -89,5 +122,12 @@ class SerieController extends AbstractController
 
         ]);
     }
+    #[Route('/delete/{id}', name: 'delete')]
+    public function delete(Serie $serie,EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($serie);
+        $entityManager->flush();
 
+        return $this->redirectToRoute('main_home');
+    }
 }
