@@ -35,7 +35,7 @@
 {% block extraStyles %}
     <style>
         body {
-            background-image: url('{{ asset('img/backdrops/' ~ serie.backdrop) }}');
+          background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.1)), url('{{ asset('img/backdrops/' ~ serie.backdrop) }}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
