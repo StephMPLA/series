@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/packages",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "stephane",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "ext-http": ""
+  }
+}
